@@ -1,0 +1,7 @@
+[biophysical_constants]
+Fructose_6_Phosphate_concentration = 100                    # units: uM
+Adenosine_Tri_Phosphate_concentration = 2300                # units: uM
+Phosphofructokinase_concentration = 0.12                    # units: uM
+F6P_binding_constant = 0.11                                 # units: mM
+ATP_binding_constant = 0.42                                 # units: mM
+Catalytic_rate = 0.4                                        # units: 1/s
