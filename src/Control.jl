@@ -2,6 +2,8 @@ function calculate_transcriptional_control_variable(problem::Dict{String,Any})::
 
     # initialize
     v_variable = 0.0
+    v_num = 0.0
+    Z = 0.0             # Partition function
 
     # retrieving values from problem dictionary
     Weight = 1.0  # estimated in part b
@@ -20,10 +22,10 @@ function calculate_transcriptional_control_variable(problem::Dict{String,Any})::
             v_num += Wf
         end
 
-        v_den += Wf
+        Z += Wf
     end
 
-    v_variable = v_num / v_den
+    v_variable = v_num / Z
 
     # return
     return v_variable
