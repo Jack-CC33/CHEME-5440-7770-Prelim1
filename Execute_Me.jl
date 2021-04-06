@@ -3,10 +3,10 @@
 
 
 # load the include file -
-#include("Include.jl")
+include("Include.jl")
 
 # main method -
-function main(parameters_file_path::String, inducer_array::Array{Float64,1})::Array{Float64,2}
+function main(parameters_file_path::String)
 
     # initialize
 
@@ -24,13 +24,15 @@ function main(parameters_file_path::String, inducer_array::Array{Float64,1})::Ar
         # grab the error message, and post -
         @error "Oooops! Hmmmmm. Something happend" exception=(error, catch_backtrace())
     end
+
+    return nothing
 end
 
 # setup the path to the parameters file -
 path_to_parameters_file = joinpath(_PATH_TO_CONFIG, "Parameters.toml")
 
 # execute
-results_array = main(path_to_parameters_file, inducer_array)
+results_array = main(path_to_parameters_file)
 
 # plot
 plot(results_array[:,1],mRNA_steady_state_array[:,2], xscale=:log10, legend=false)
