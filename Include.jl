@@ -25,4 +25,4 @@ include("$(path_to_control)")
 
 # Problem.jl
 path_to_problem = joinpath(_PATH_TO_SRC,"Problem.jl")
-include("$(path_to_control)")
+include("$(path_to_problem)")
