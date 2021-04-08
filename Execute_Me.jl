@@ -32,7 +32,7 @@ function main(parameters_file_path::String, data_file_path::String)
 
         # TODO:  Solve things
         for (index, x) ∈ enumerate(Concentration_35AMP_data)
-            Returned_rate = calculate_reaction_rate(problem_dictionary, Weights, K_35AMP, n_35AMP, x)
+            Returned_rate = calculate_reaction_rate(problem_dictionary, Weights, K_35AMP, n_35AMP, x*1000)
             Sim[index] = Returned_rate
             print("\n\nReturned_rate = $(Returned_rate)")
             Data[index] = V_data[index]
@@ -40,11 +40,11 @@ function main(parameters_file_path::String, data_file_path::String)
         end
 
         # Part C:  Plot data and mathematical model
-        p1 = plot(Concentration_35AMP_data, Data, st = :line)
-        p2 = plot(Concentration_35AMP_data, Sim, st = :line)
-        plot(p1, p2)
-        xlabel!("My X label (units)")
-        ylabel!("My Y label (units)")
+        p1 = plot(Concentration_35AMP_data, Data, st = :line, title = "Experimental")
+        p2 = plot(Concentration_35AMP_data, Sim, st = :line, title = "Calculated")
+        plot(p1,p2,legend=false)
+        xlabel!("[3'-5' AMP] (mM)")
+        ylabel!("r̂ (uM/hr)")
         savefig(path_to_plot)
 
     catch error
