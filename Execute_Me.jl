@@ -13,12 +13,16 @@ function main(parameters_file_path::String, data_file_path::String)
     Concentration_35AMP_data = Dataset[:,1]             # units: mM
     V_data = Dataset[:,2]                               # units: uM/hr
     Confidence_Int_data = Dataset[:,3]                  # units: uM/hr
-    print(Concentration_35AMP_data)
-    print("\n\n")
-    print(V_data)
-    print("\n\n")
-    print(Confidence_Int_data)
-    print("\n\n")
+    
+    N = length(Concentration_35AMP_data)
+    Sim = zeros(N)
+    Data = zeros(N)
+
+    # Part B:  Estimate fitting constants from experimental dataset
+    # Choice of state weights, effector binding constant, and order parameter
+    Weights = [1.0, 1.0, 1.0]
+    K_35AMP = 0.6
+    n_35AMP = 1.0
 
     try 
 
@@ -27,8 +31,21 @@ function main(parameters_file_path::String, data_file_path::String)
         print("F6P Concentration = $(problem_dictionary["Fructose_6_Phosphate_concentration"]) uM\n")
 
         # TODO:  Solve things
+        for (index, x) ∈ enumerate(Concentration_35AMP_data)
+            Returned_rate = calculate_reaction_rate(problem_dictionary, Weights, K_35AMP, n_35AMP, x)
+            Sim[index] = Returned_rate
+            print("\n\nReturned_rate = $(Returned_rate)")
+            Data[index] = V_data[index]
+            print("\nExperimental rate = $(V_data[index])")
+        end
 
-        # return 
+        # Part C:  Plot data and mathematical model
+        p1 = plot(Concentration_35AMP_data, Data, st = :line)
+        p2 = plot(Concentration_35AMP_data, Sim, st = :line)
+        plot(p1, p2)
+        xlabel!("My X label (units)")
+        ylabel!("My Y label (units)")
+        savefig(path_to_plot)
 
     catch error
 
@@ -47,11 +64,3 @@ path_to_data_file = joinpath(_PATH_TO_CONFIG, "Data-3-5-AMP.csv")
 
 # execute
 results_array = main(path_to_parameters_file, path_to_data_file)
-
-# plot
-#plot(results_array[:,1],mRNA_steady_state_array[:,2], xscale=:log10, legend=false)
-#xlabel!("My X label (units)")
-#ylabel!("My Y label (units)")
-
-#path_to_plot = joinpath(_PATH_TO_OUTPUT,"Prelim1_Plot.png")
-#savefig(path_to_plot)

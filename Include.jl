@@ -26,3 +26,14 @@ include("$(path_to_control)")
 # Problem.jl
 path_to_problem = joinpath(_PATH_TO_SRC,"Problem.jl")
 include("$(path_to_problem)")
+
+# Rate.jl
+path_to_rate = joinpath(_PATH_TO_SRC,"Rate.jl")
+include("$(path_to_rate)")
+
+
+
+# my output
+
+# Prelim1_Plot.png
+path_to_plot = joinpath(_PATH_TO_OUTPUT,"Prelim1_Plot.png")
