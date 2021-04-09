@@ -1,7 +1,7 @@
 function calculate_reaction_rate(problem::Dict{String,Any}, Weights::Array{Float64,1}, k_activator::Float64, n_activator::Float64, x::Float64)::Float64
 
     # Incorporate problem dictionary data
-    kcat = problem["Catalytic_rate"]
+    kcat = problem["Catalytic_rate"] * 3600
     conc_F6P = problem["Fructose_6_Phosphate_concentration"]
     k_F6P = problem["F6P_binding_constant"]
     conc_ATP = problem["Adenosine_Tri_Phosphate_concentration"]

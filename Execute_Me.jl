@@ -16,13 +16,17 @@ function main(parameters_file_path::String, data_file_path::String)
     
     N = length(Concentration_35AMP_data)
     Sim = zeros(N)
+    Sim2 = zeros(N)
     Data = zeros(N)
 
     # Part B:  Estimate fitting constants from experimental dataset
     # Choice of state weights, effector binding constant, and order parameter
-    Weights = [1.0, 1.0, 1.0]
-    K_35AMP = 0.6
-    n_35AMP = 1.0
+    Weights = [1.0, 0.05, 5000.0]
+    K_35AMP = 190.0
+    n_35AMP = 10.0
+    Weights2 = [4600.0, 228.0, 1.5*16240.0]
+    K_35AMP2 = 160.0
+    n_35AMP2 = 4.2
 
     try 
 
@@ -35,14 +39,18 @@ function main(parameters_file_path::String, data_file_path::String)
             Returned_rate = calculate_reaction_rate(problem_dictionary, Weights, K_35AMP, n_35AMP, x*1000)
             Sim[index] = Returned_rate
             print("\n\nReturned_rate = $(Returned_rate)")
+            Returned_rate2 = calculate_reaction_rate(problem_dictionary, Weights2, K_35AMP2, n_35AMP2, x*1000)
+            Sim2[index] = Returned_rate2
+
             Data[index] = V_data[index]
             print("\nExperimental rate = $(V_data[index])")
         end
 
         # Part C:  Plot data and mathematical model
-        p1 = plot(Concentration_35AMP_data, Data, st = :line, title = "Experimental")
-        p2 = plot(Concentration_35AMP_data, Sim, st = :line, title = "Calculated")
-        plot(p1,p2,legend=false)
+        plot(Concentration_35AMP_data, Data, st = :line, color = "black", title="PFK-Catalyzed Reaction Rate", label = "Experimental")
+        plot!(Concentration_35AMP_data, Sim, st = :line, color = "red", legend=:right, label = "Computed")
+        plot!(Concentration_35AMP_data, Sim2, st = :line, color = "blue", label = "Params Estimated")
+        #title("PFK-Catalyzed Reaction Rate")
         xlabel!("[3'-5' AMP] (mM)")
         ylabel!("r̂ (uM/hr)")
         savefig(path_to_plot)
